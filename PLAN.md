@@ -9,10 +9,13 @@
 
 | Categoría      | Plugin                                      | Estado |
 |----------------|---------------------------------------------|--------|
-| Tema           | dracula/vim                                 | ✅     |
+| Tema           | catppuccin/nvim (mocha)                     | ✅     |
+| Tema           | dracula/vim                                 | ✅ fallback |
 | IA             | github/copilot.vim                          | ✅     |
 | Explorador     | preservim/nerdtree                          | ✅     |
+| Explorador     | stevearc/oil.nvim                           | ✅     |
 | Buscador       | nvim-telescope/telescope.nvim               | ✅     |
+| Buscador       | telescope-fzf-native.nvim                   | ✅     |
 | LSP            | neovim/nvim-lspconfig                       | ✅     |
 | Autocompletado | hrsh7th/nvim-cmp + cmp-nvim-lsp/buffer/path | ✅     |
 | Snippets       | L3MON4D3/LuaSnip + cmp_luasnip             | ✅     |
@@ -20,7 +23,8 @@
 | Comentarios    | JoosepAlviste/nvim-ts-context-commentstring | ✅     |
 | Edición        | tpope/vim-surround                          | ✅     |
 | Edición        | windwp/nvim-autopairs                       | ✅     |
-| Git            | airblade/vim-gitgutter                      | ✅     |
+| Navegación     | folke/flash.nvim                            | ✅     |
+| Git            | lewis6991/gitsigns.nvim                     | ✅     |
 | Git            | tpope/vim-fugitive                          | ✅     |
 | Git            | sindrets/diffview.nvim                      | ✅     |
 | Sesiones       | tpope/vim-obsession                         | ✅     |
@@ -28,7 +32,20 @@
 | UI             | nvim-tree/nvim-web-devicons                 | ✅     |
 | UI             | lukas-reineke/indent-blankline.nvim         | ✅     |
 | UI             | akinsho/bufferline.nvim                     | ✅     |
+| UI             | norcalli/nvim-colorizer.lua                 | ✅     |
+| UI             | stevearc/dressing.nvim                      | ✅     |
+| UI             | rcarriga/nvim-notify                        | ✅     |
+| UI             | folke/noice.nvim                            | ✅     |
+| UI             | folke/which-key.nvim                        | ✅     |
+| UI             | SmiteshP/nvim-navic                         | ⚠️ pendiente red |
+| UI             | utilyre/barbecue.nvim                       | ⚠️ requiere navic |
+| Folding        | kevinhwang91/nvim-ufo + promise-async       | ✅     |
+| Animaciones    | echasnovski/mini.animate                    | ✅     |
 | Sintaxis       | nvim-treesitter/nvim-treesitter             | ✅     |
+
+> ⚠️ `nvim-navic` y `barbecue` fallaron por error de red en la instalación. Ejecutar `:PlugInstall nvim-navic` cuando haya conexión estable.
+
+---
 
 ## LSP Servers activos
 
@@ -42,26 +59,35 @@
 ## Roadmap
 
 ### Completado
-- [x] Setup base + tema Dracula
+- [x] Setup base + tema Dracula → migrado a **Catppuccin Mocha**
 - [x] LSP + autocompletado (nvim-cmp + LuaSnip)
-- [x] Git workflow: gitgutter (hunks) + fugitive (comandos) + diffview (diffs visuales)
+- [x] Git workflow: gitsigns (hunks) + fugitive (comandos) + diffview (diffs visuales)
 - [x] Gestión de sesiones (vim-obsession)
 - [x] Keybindings optimizados para Colemak Mod-DH (split 32 teclas)
-- [x] Statusline con indicador de sesión activa
+- [x] Statusline con indicador de sesión activa (lualine)
+- [x] Breadcrumbs de contexto LSP (barbecue + navic) — pendiente navic
+- [x] Folding mejorado con treesitter/LSP (nvim-ufo)
+- [x] Navegación rápida (flash.nvim)
+- [x] Popup de keymaps (which-key)
+- [x] File manager editable (oil.nvim)
+- [x] Colores CSS inline (nvim-colorizer)
+- [x] UI moderna: cmdline flotante, notificaciones animadas (noice + nvim-notify)
+- [x] Popups de input/select elegantes (dressing.nvim)
+- [x] Búsqueda fzf nativa acelerada (telescope-fzf-native)
+- [x] Clipboard integrado con macOS (`set clipboard=unnamed`)
+- [x] Fix error `ft_to_lang` de Telescope en Neovim 0.10+
 
 ### Pendiente — Alta prioridad
 - [ ] **conform.nvim** — formateo automático al guardar (prettier + eslint)
 - [ ] **nvim-lint** — linting asíncrono (eslint)
-- [ ] **which-key.nvim** — overlay visual de atajos (ayuda durante aprendizaje)
+- [ ] Instalar **nvim-navic** cuando haya conexión estable (`:PlugInstall nvim-navic`)
 
 ### Pendiente — Media prioridad
 - [ ] **nvim-dap** — debugging (breakpoints, variables, call stack)
 - [ ] **nvim-dap-ui** — interfaz visual para DAP
-- [ ] Migración de vim-plug a **lazy.nvim** (carga lazy, más rápido)
 
 ### Pendiente — Baja prioridad
-- [ ] **oil.nvim** — reemplazar NERDTree por explorador de archivos como buffer
-- [ ] **noice.nvim** — UI mejorada para mensajes y cmdline
+- [ ] Migración de vim-plug a **lazy.nvim** (carga lazy, más rápido)
 
 ---
 
@@ -71,3 +97,6 @@
 - La configuración Lua se embebe con bloques `lua << EOF` en el vimrc
 - Los keymaps de LSP se activan solo en buffers con servidor LSP adjunto (autocmd `LspAttach`)
 - Treesitter se instala async en `VimEnter` (no bloquea el arranque)
+- `mini.animate`: scroll y cursor desactivados (conflicto con Magic Mouse), solo resize activo
+- Telescope previewers usan highlighting nativo (no treesitter) para evitar error `ft_to_lang` en Neovim 0.10+
+- `gitsigns` reemplaza `vim-gitgutter`: mismos atajos de hunks + blame inline (`<leader>gB`)
