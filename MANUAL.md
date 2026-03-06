@@ -1,0 +1,188 @@
+# Manual de Atajos — Neovim
+
+> Leader = `Space` · Teclado: Split 32 teclas · Layout: Colemak Mod-DH
+
+---
+
+## Criterio de diseño de atajos
+
+Los atajos están diseñados para **Colemak Mod-DH**. Las teclas más frecuentes
+usan la fila home (`A R S T | N E I O`):
+
+- Splits: `<leader>a/n/u/i` — las cuatro teclas de dirección en posición cómoda
+- Mover líneas: `Alt+n/e` — equivalentes físicos de `j/k` en Colemak
+
+---
+
+## Explorador de archivos (NERDTree)
+
+| Atajo          | Acción                                  |
+|----------------|-----------------------------------------|
+| `<leader>e`    | Abrir/cerrar árbol de archivos          |
+| `<leader>E`    | Revelar archivo actual en el árbol      |
+
+---
+
+## Splits (ventanas)
+
+| Atajo          | Acción              | Posición Colemak  |
+|----------------|---------------------|-------------------|
+| `<leader>a`    | Split izquierdo     | pinky izq home    |
+| `<leader>n`    | Split abajo         | índice der home   |
+| `<leader>u`    | Split arriba        | fila sup der      |
+| `<leader>i`    | Split derecho       | anular der home   |
+
+---
+
+## Buffers (pestañas)
+
+| Atajo          | Acción                            |
+|----------------|-----------------------------------|
+| `<Tab>`        | Siguiente buffer                  |
+| `<S-Tab>`      | Buffer anterior                   |
+| `<leader>1-9`  | Saltar al buffer N                |
+| `<leader>x`    | Cerrar buffer actual              |
+
+---
+
+## Buscador (Telescope)
+
+| Atajo          | Acción                            |
+|----------------|-----------------------------------|
+| `<leader>ff`   | Buscar archivos                   |
+| `<leader>fg`   | Buscar texto en proyecto (grep)   |
+| `<leader>fb`   | Buscar buffer abierto             |
+| `<leader>fr`   | Archivos recientes                |
+| `<leader>fs`   | Símbolos LSP del archivo          |
+
+---
+
+## LSP (código)
+
+| Atajo          | Acción                            |
+|----------------|-----------------------------------|
+| `gd`           | Ir a definición                   |
+| `gD`           | Ir a declaración                  |
+| `gi`           | Ir a implementación               |
+| `gr`           | Ver referencias                   |
+| `K`            | Hover / documentación             |
+| `<leader>rn`   | Renombrar símbolo                 |
+| `<leader>ca`   | Acciones de código                |
+| `<leader>d`    | Diagnóstico flotante              |
+| `]d`           | Siguiente diagnóstico             |
+| `[d`           | Diagnóstico anterior              |
+| `<leader>gt`   | Ir a definición en nueva tab      |
+| `Ctrl+Click`   | Ir a definición en nueva tab      |
+
+---
+
+## Git — Hunks (vim-gitgutter)
+
+| Atajo          | Acción                            |
+|----------------|-----------------------------------|
+| `]g`           | Siguiente hunk                    |
+| `[g`           | Hunk anterior                     |
+| `<leader>gp`   | Preview del hunk                  |
+| `<leader>gs`   | Stage del hunk                    |
+| `<leader>gu`   | Undo del hunk                     |
+
+---
+
+## Git — Comandos (vim-fugitive)
+
+| Atajo          | Acción                            |
+|----------------|-----------------------------------|
+| `<leader>gg`   | Panel Git (status)                |
+| `<leader>gb`   | Git blame                         |
+| `<leader>gL`   | Git log (oneline)                 |
+
+---
+
+## Git — Diffs visuales (diffview.nvim)
+
+| Atajo          | Acción                                      |
+|----------------|---------------------------------------------|
+| `<leader>gd`   | Abrir vista de cambios (todos los archivos) |
+| `<leader>gD`   | Cerrar diffview                             |
+| `<leader>gf`   | Historial del archivo actual                |
+| `<leader>gH`   | Historial completo del repositorio          |
+
+**Dentro de diffview:**
+- `Tab` / `S-Tab` — navegar entre archivos modificados
+- `[x` / `]x` — saltar al conflicto anterior/siguiente
+- `q` — cerrar el panel
+
+---
+
+## Sesiones (vim-obsession)
+
+| Atajo          | Acción                                                          |
+|----------------|-----------------------------------------------------------------|
+| `<leader>ss`   | Iniciar/pausar grabación de sesión en `.session.vim`            |
+| `<leader>sr`   | Retomar sesión desde `.session.vim` en el directorio actual     |
+
+**Flujo típico:**
+1. Abrir el proyecto: `nvim`
+2. `<leader>ss` para empezar a grabar (lualine muestra `[S]`)
+3. Abrir archivos, splits, etc. — todo se guarda automáticamente
+4. La próxima vez: `nvim -S .session.vim` o `<leader>sr`
+5. `<leader>ss` de nuevo para pausar/reanudar la grabación
+
+**Desde terminal:**
+```
+nvim -S .session.vim      # retomar sesión al abrir nvim
+```
+
+---
+
+## Edición
+
+| Atajo             | Acción                            |
+|-------------------|-----------------------------------|
+| `Alt+n`           | Mover línea/bloque abajo          |
+| `Alt+e`           | Mover línea/bloque arriba         |
+| `Alt+Down`        | Mover línea/bloque abajo          |
+| `Alt+Up`          | Mover línea/bloque arriba         |
+| `gcc`             | Comentar/descomentar línea        |
+| `gc` (visual)     | Comentar/descomentar selección    |
+| `ys<obj><char>`   | Rodear con delimitador            |
+| `ds<char>`        | Eliminar delimitador              |
+| `cs<old><new>`    | Cambiar delimitador               |
+
+---
+
+## Copilot (IA)
+
+| Atajo      | Acción                     |
+|------------|----------------------------|
+| `Tab`      | Aceptar sugerencia         |
+| `Alt+]`    | Siguiente sugerencia       |
+| `Alt+[`    | Sugerencia anterior        |
+| `Ctrl+\`   | Descartar sugerencia       |
+
+---
+
+## Terminal
+
+| Atajo              | Acción                              |
+|--------------------|-------------------------------------|
+| `<leader>tc`       | Abrir terminal lateral con Claude   |
+| `<leader>tt`       | Abrir terminal lateral limpio       |
+| `Esc Esc`          | Salir de modo terminal (sin cerrar) |
+
+---
+
+## Búsqueda
+
+| Atajo    | Acción                          |
+|----------|---------------------------------|
+| `Esc`    | Limpiar highlight de búsqueda   |
+
+---
+
+## Indentación (visual)
+
+| Atajo    | Acción                                 |
+|----------|----------------------------------------|
+| `<`      | Indentar izquierda (mantiene selección)|
+| `>`      | Indentar derecha (mantiene selección)  |
