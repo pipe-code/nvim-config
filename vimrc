@@ -35,6 +35,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 
+" Formatting
+Plug 'stevearc/conform.nvim'
+
 " Editing helpers
 Plug 'numToStr/Comment.nvim'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -55,7 +58,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
-Plug 'norcalli/nvim-colorizer.lua'           " colores inline en CSS/SCSS/HTML
+Plug 'uga-rosa/ccc.nvim'                     " color picker + preview inline
 Plug 'stevearc/dressing.nvim'                " popups de input/select elegantes
 Plug 'MunifTanjim/nui.nvim'                  " dependencia de noice
 Plug 'rcarriga/nvim-notify'                  " notificaciones animadas
@@ -89,6 +92,11 @@ require('catppuccin').setup({
   flavour    = 'mocha',
   background = { light = 'latte', dark = 'mocha' },
   transparent_background = false,
+  custom_highlights = function(colors)
+    return {
+      Visual = { bg = colors.mauve, fg = colors.base },
+    }
+  end,
   integrations = {
     treesitter       = true,
     telescope        = { enabled = true },
@@ -311,13 +319,39 @@ vim.api.nvim_create_autocmd('FileType', {
 EOF
 
 " ============================================================
-" nvim-colorizer — colores CSS/hex renderizados inline
+" ccc.nvim — color picker + preview inline
+" <leader>cc → abrir picker sobre el color bajo el cursor
 " ============================================================
 lua << EOF
-require('colorizer').setup(
-  { 'css', 'scss', 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'lua', 'vim' },
-  { RGB = true, RRGGBB = true, names = false, RRGGBBAA = true, css = true }
-)
+local ccc = require('ccc')
+
+ccc.setup({
+  highlighter = {
+    auto_enable = true,
+    lsp         = true,
+    filetypes   = {
+      'css', 'scss', 'html',
+      'javascript', 'typescript',
+      'javascriptreact', 'typescriptreact',
+      'lua', 'vim',
+    },
+  },
+  pickers = {
+    ccc.picker.hex,
+    ccc.picker.css_rgb,
+    ccc.picker.css_hsl,
+    ccc.picker.css_hwb,
+    ccc.picker.css_name,
+  },
+  outputs = {
+    ccc.output.hex,
+    ccc.output.css_rgb,
+    ccc.output.css_hsl,
+  },
+})
+
+vim.keymap.set('n', '<leader>cc', ':CccPick<CR>',
+  { silent = true, desc = 'CCC: color picker' })
 EOF
 
 " ============================================================
@@ -338,6 +372,9 @@ EOF
 " ============================================================
 lua << EOF
 require('noice').setup({
+  -- Desactivar el popup flotante para input()/inputlist() — NERDTree (m)
+  -- usará el comportamiento nativo de Neovim (opciones fijas en la parte baja)
+  input = { enabled = false },
   lsp = {
     override = {
       ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
@@ -496,6 +533,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+EOF
+
+" ============================================================
+" conform.nvim — formateo con Prettier
+" <leader>p  → formatear buffer actual
+" ============================================================
+lua << EOF
+require('conform').setup({
+  formatters_by_ft = {
+    javascript      = { 'prettier' },
+    javascriptreact = { 'prettier' },
+    typescript      = { 'prettier' },
+    typescriptreact = { 'prettier' },
+    css             = { 'prettier' },
+    scss            = { 'prettier' },
+    html            = { 'prettier' },
+    json            = { 'prettier' },
+    jsonc           = { 'prettier' },
+    markdown        = { 'prettier' },
+    yaml            = { 'prettier' },
+  },
+  -- Descomenta para formatear al guardar:
+  -- format_on_save = { timeout_ms = 2000, lsp_fallback = true },
+})
+
+vim.keymap.set({ 'n', 'v' }, '<leader>p', function()
+  require('conform').format({ async = true, lsp_fallback = true })
+end, { silent = true, desc = 'Prettier: formatear' })
 EOF
 
 " ============================================================
@@ -849,6 +914,8 @@ nnoremap <leader>i <C-w>l
 " Better indentation in visual mode
 vnoremap < <gv
 vnoremap > >gv
+vnoremap <Tab>   >gv
+vnoremap <S-Tab> <gv
 
 " Mover lineas/bloques — Alt+n/e (posicion fisica j/k en Colemak) y Alt+flechas
 nnoremap <A-n>    :m .+1<CR>==
@@ -866,5 +933,6 @@ inoremap <A-Up>   <Esc>:m .-2<CR>==gi
 
 " Terminal lateral derecho
 nnoremap <leader>tc :botright 85vsplit \| terminal claude<CR>i
+nnoremap <leader>tg :botright 85vsplit \| terminal gemini<CR>i
 nnoremap <leader>tt :botright 85vsplit \| terminal<CR>i
 tnoremap <Esc><Esc> <C-\><C-n>
