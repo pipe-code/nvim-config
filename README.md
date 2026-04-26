@@ -27,11 +27,21 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # LSP servers
 npm install -g typescript typescript-language-server vscode-langservers-extracted
 
+# Prettier (formateador)
+npm install -g prettier
+
 # telescope-fzf-native (requiere make)
 brew install make
 ```
 
-### 2. Copiar archivos
+### 2. Crear directorios necesarios
+
+```bash
+mkdir -p ~/.vim/undodir
+mkdir -p ~/.config/nvim
+```
+
+### 3. Copiar archivos
 
 ```bash
 git clone https://github.com/pipe-code/nvim-config.git
@@ -39,7 +49,7 @@ cp nvim-config/vimrc ~/.vimrc
 cp nvim-config/init.vim ~/.config/nvim/init.vim
 ```
 
-### 3. Instalar plugins
+### 4. Instalar plugins
 
 ```bash
 nvim +PlugInstall +qall
@@ -51,6 +61,7 @@ nvim +PlugInstall +qall
 - **Telescope + fzf-native** — fuzzy finder
 - **nvim-lspconfig + nvim-cmp** — LSP y autocompletado
 - **Treesitter** — syntax highlighting
+- **conform.nvim + Prettier** — formateo (`<leader>p`)
 - **Gitsigns + Fugitive + Diffview** — Git
 - **Noice + nvim-notify** — UI moderna
 - **Which-key** — popup de keymaps
@@ -58,4 +69,5 @@ nvim +PlugInstall +qall
 - **oil.nvim** — file manager editable
 - **nvim-ufo** — folding con LSP/treesitter
 - **Barbecue + navic** — breadcrumbs en winbar
+- **ccc.nvim** — color picker + preview inline (`<leader>cc`)
 - **Copilot** — AI completion
