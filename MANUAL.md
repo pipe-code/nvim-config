@@ -206,6 +206,26 @@ nvim -S .session.vim      # retomar sesión al abrir nvim
 
 ---
 
+## Colores (ccc.nvim)
+
+| Atajo          | Acción                                              |
+|----------------|-----------------------------------------------------|
+| `<leader>cc`   | Abrir color picker sobre el color bajo el cursor    |
+
+> Preview inline automático en CSS, SCSS, HTML, JS/TS y Lua. El picker permite cambiar el formato de salida (hex, rgb, hsl).
+
+---
+
+## Formateo (conform.nvim + Prettier)
+
+| Atajo          | Acción                                |
+|----------------|---------------------------------------|
+| `<leader>p`    | Formatear buffer o selección actual   |
+
+> Formatea JS, TS, TSX, CSS, SCSS, HTML, JSON, Markdown y YAML con Prettier.
+
+---
+
 ## Copilot (IA)
 
 | Atajo      | Acción                     |
@@ -222,6 +242,7 @@ nvim -S .session.vim      # retomar sesión al abrir nvim
 | Atajo              | Acción                              |
 |--------------------|-------------------------------------|
 | `<leader>tc`       | Abrir terminal lateral con Claude   |
+| `<leader>tg`       | Abrir terminal lateral con Gemini   |
 | `<leader>tt`       | Abrir terminal lateral limpio       |
 | `Esc Esc`          | Salir de modo terminal (sin cerrar) |
 
@@ -237,10 +258,12 @@ nvim -S .session.vim      # retomar sesión al abrir nvim
 
 ## Indentación (visual)
 
-| Atajo    | Acción                                 |
-|----------|----------------------------------------|
-| `<`      | Indentar izquierda (mantiene selección)|
-| `>`      | Indentar derecha (mantiene selección)  |
+| Atajo      | Acción                                 |
+|------------|----------------------------------------|
+| `<`        | Indentar izquierda (mantiene selección)|
+| `>`        | Indentar derecha (mantiene selección)  |
+| `Tab`      | Indentar derecha (mantiene selección)  |
+| `S-Tab`    | Indentar izquierda (mantiene selección)|
 
 ---
 
